@@ -74,6 +74,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+   
 
 
 }
@@ -81,12 +82,3 @@ public class PlayerController : MonoBehaviour
 
 
 
-//if(Input.GetKeyDown(KeyCode.P))
-//{
-//    anim.SetBool("Play", true);
-//}
-//else if(Input.GetKeyDown(KeyCode.Z))
-//{
-//    anim.Play("Idle_Guard_AR");
-//    anim.SetBool("Play", false);
-//}
