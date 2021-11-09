@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private Transform cameraM;
    
     public InputActions ip;
+    public Vector2 movement;
     private void OnEnable()
     {
         ip = new InputActions();
@@ -35,11 +36,13 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         cameraM = Camera.main.transform;
         controller = gameObject.GetComponent<CharacterController>();
+      
     }
 
     public float walkanimSpeed;
     void Update()
     {
+        movement = ip.Player.Movement.ReadValue<Vector2>();
         groundedPlayer = controller.isGrounded;
 
         if (groundedPlayer && playerVelocity.y < 0)
@@ -47,13 +50,12 @@ public class PlayerController : MonoBehaviour
             playerVelocity.y = 0f;
         }
 
-        Vector3 move = new Vector3(ip.Player.Movement.ReadValue<Vector2>().x, 0, ip.Player.Movement.ReadValue<Vector2>().y);
+        Vector3 move = new Vector3(movement.x, 0, movement.y).normalized;
         move = cameraM.forward * move.z + cameraM.right * move.x;
         move.y = 0;
         controller.Move(move * Time.deltaTime * playerSpeed);
 
         walkanimSpeed = move.sqrMagnitude;
-
         anim.SetFloat("walk", walkanimSpeed,0.25f,Time.deltaTime);
        
 
@@ -66,9 +68,9 @@ public class PlayerController : MonoBehaviour
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
 
-        if(ip.Player.Movement.ReadValue<Vector2>()!=Vector2.zero)
+        if(move.magnitude>=0f)
         {
-            float targetAngle = Mathf.Atan2(ip.Player.Movement.ReadValue<Vector2>().x, ip.Player.Movement.ReadValue<Vector2>().y) * Mathf.Rad2Deg+cameraM.eulerAngles.y;
+            float targetAngle = Mathf.Atan2(move.x, move.z) * Mathf.Rad2Deg+cameraM.eulerAngles.y;
             Quaternion rotation = Quaternion.Euler(0f, targetAngle, 0f);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation , Time.deltaTime * Rspeed);
         }
