@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
         controller.Move(move * Time.deltaTime * playerSpeed);
 
         walkanimSpeed = move.sqrMagnitude;
-        anim.SetFloat("walk", walkanimSpeed,0.25f,Time.deltaTime);
+        anim.SetFloat("walk", walkanimSpeed, 5f, Time.deltaTime);
        
 
         // Changes the height position of the player..
@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour
         if(move.magnitude>=0f)
         {
             float targetAngle = Mathf.Atan2(move.x, move.z) * Mathf.Rad2Deg+cameraM.eulerAngles.y;
+            Debug.Log(targetAngle);
             Quaternion rotation = Quaternion.Euler(0f, targetAngle, 0f);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation , Time.deltaTime * Rspeed);
         }
