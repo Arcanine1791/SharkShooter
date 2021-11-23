@@ -34,12 +34,13 @@ public class ActionsHelper : MonoBehaviour
         else
             anim.Play("vc");
 
-        oncamchange =! oncamchange;
+        oncamchange = !oncamchange;
     }
     public void SwitchPriority()
     {
         if (oncamchange)
-        { vm.Priority = 1;
+        {
+            vm.Priority = 1;
             flc.Priority = 0;
         }
         else

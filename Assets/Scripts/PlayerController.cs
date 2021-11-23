@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
    
     public InputActions ip;
     public Vector2 movement;
+
     private void OnEnable()
     {
         ip = new InputActions();
